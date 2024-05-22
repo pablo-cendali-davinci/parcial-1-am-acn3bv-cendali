@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Aplicación-seguimientos-de-gastos</string>
+        <string-array name="categorias">
+            <item>Alimentos</item>
+            <item>Transporte</item>
+            <item>Entretenimiento</item>
+            <item>Educación</item>
+            <item>Salud</item>
+            <item>Otros</item>
+        </string-array>
 </resources>
