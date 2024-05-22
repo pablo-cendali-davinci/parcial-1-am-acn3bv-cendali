@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
     private Button btnConfirmarTransaccion;
     private Spinner spinnerCategorias;
     private ImageButton btnRegreso;
+
+    private EditText cant1, fecha1, nota;
+
+    private TextView tituloTrans, seleccionCat, fechaTrans, notaLabel, ingresarCantidad;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +40,19 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        spinnerCategorias= findViewById(R.id.spinner_categorias);
+        cant1 = findViewById(R.id.cant_1);
+        fecha1 = findViewById(R.id.fecha_1);
+        nota = findViewById(R.id.id_nota);
+        ingresarCantidad = findViewById(R.id.textView7);
+        tituloTrans = findViewById(R.id.titulo_trans);
+        seleccionCat = findViewById(R.id.seleccion_cat);
+        fechaTrans = findViewById(R.id.fecha_trans);
+        notaLabel = findViewById(R.id.nota);
 
-        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.categorias, android.R.layout.simple_spinner_item);
+
+        spinnerCategorias = findViewById(R.id.spinner_categorias);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categorias, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -47,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String seleccionarCategoria = parent.getItemAtPosition(position).toString();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 //accion al no seleccionar nada
@@ -60,9 +77,39 @@ public class MainActivity extends AppCompatActivity {
 
         btnConfirmarTransaccion = findViewById(R.id.btn_confirmarTransaccion);
         btnConfirmarTransaccion.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this,"La transacción se guardo correctamente", Toast.LENGTH_SHORT).show();
+            if (validarCampos()) {
+                Toast.makeText(MainActivity.this, "La transacción se guardo correctamente", Toast.LENGTH_SHORT).show();
+            }
         });
+    }
+        private boolean validarCampos() {
+            String cantidadStr = cant1.getText().toString();
+            String fechaStr = fecha1.getText().toString();
+
+            if (cantidadStr.isEmpty()) {
+                cant1.setError("La cantidad es requerida");
+                return false;
+
+            }
+
+            try {
+                double cantidad = Double.parseDouble(cantidadStr);
+                if (cantidad <=0){
+                    cant1.setError("La cantidad debe ser mayor que 0");
+                    return false;
+                }
+
+            } catch (NumberFormatException e) {
+                cant1.setError("Ingrese un número valido");
+                return false;
+            }
+            if (fechaStr.isEmpty()) {
+                fecha1.setError("La fecha es requerida");
+                return false;
+            }
+
+            return true;
+        }
 
 
     }
-}
