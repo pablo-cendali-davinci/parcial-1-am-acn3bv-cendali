@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,7 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
-
+    private Button btnConfirmarTransaccion;
     private Spinner spinnerCategorias;
     private ImageButton btnRegreso;
     @Override
@@ -55,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         btnRegreso = findViewById(R.id.btn_regreso);
         btnRegreso.setOnClickListener(v -> {
             Toast.makeText(MainActivity.this, "Volviendo al login", Toast.LENGTH_SHORT).show();
+        });
+
+        btnConfirmarTransaccion = findViewById(R.id.btn_confirmarTransaccion);
+        btnConfirmarTransaccion.setOnClickListener(v -> {
+            Toast.makeText(MainActivity.this,"La transacción se guardo correctamente", Toast.LENGTH_SHORT).show();
         });
 
 
