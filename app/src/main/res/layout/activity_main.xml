@@ -109,7 +109,8 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Ingresar fecha"
-        android:inputType="date"
+        android:inputType="none"
+        android:focusable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
@@ -153,6 +154,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_nota" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,6 @@
 package ar.edu.davinci.aplicacin_seguimientos_de_gastos;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +19,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import org.w3c.dom.Text;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnConfirmarTransaccion;
@@ -70,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        fecha1.setOnClickListener(v -> mostrarDatePickerDialog());
+
         btnRegreso = findViewById(R.id.btn_regreso);
         btnRegreso.setOnClickListener(v -> {
             Toast.makeText(MainActivity.this, "Volviendo al login", Toast.LENGTH_SHORT).show();
@@ -82,6 +87,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+        private void mostrarDatePickerDialog() {
+            final Calendar calendiario = Calendar.getInstance();
+            int anio = calendiario.get(Calendar.YEAR);
+            int mes = calendiario.get(Calendar.MONTH);
+            int dia = calendiario.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    this,
+                    (view, year, monthOfYear, dayOfMonth) -> {
+                        // Actualizar el EditText con la fecha seleccionada
+                        String fechaSeleccionada = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        fecha1.setText(fechaSeleccionada);
+                    },
+                    anio, mes, dia);
+            datePickerDialog.show();
+
+        }
+
         private boolean validarCampos() {
             String cantidadStr = cant1.getText().toString();
             String fechaStr = fecha1.getText().toString();
@@ -110,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         }
+
 
 
     }
