@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <!-- Título del menú -->
+
+    <TextView
+        android:id="@+id/tvTitleMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Menú"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Botón de Añadir Gastos/Transacción -->
+
+    <Button
+        android:id="@+id/btnAddTransactionMenu"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="34dp"
+        android:backgroundTint="@color/ButtonColor"
+        android:textColor="@android:color/black"
+        android:text="Añadir Gastos/Transacciones"
+        android:padding="16dp"/>
+
+    <!-- Botón de Revisar Gastos -->
+    <Button
+        android:id="@+id/btnRevisarGastosMenu"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/ButtonColor"
+        android:textColor="@android:color/black"
+        android:text="Revisar Gastos"
+        android:padding="16dp"/>
+
+    <!-- Espacio para ajustar el contenido contenido -->
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="34dp" />
+
+
+</LinearLayout>
