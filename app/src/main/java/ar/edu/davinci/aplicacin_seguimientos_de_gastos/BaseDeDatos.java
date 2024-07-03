@@ -80,4 +80,44 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         db.delete(TABLE_GASTOS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }
+
+    // metodo para obtener los gastos filtrados
+    public List<Gasto> getGastosFiltrados(String categoria, String fecha) {
+        List<Gasto> gastos = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        StringBuilder query = new StringBuilder("SELECT * FROM " + TABLE_GASTOS + " WHERE 1=1");
+
+        List<String> argsList = new ArrayList<>();
+
+        if (!categoria.equals("Todos")) {
+            query.append(" AND ").append(COLUMN_CATEGORIA).append(" = ?");
+            argsList.add(categoria);
+        }
+
+        if (!fecha.isEmpty()) {
+            query.append(" AND ").append(COLUMN_FECHA).append(" = ?");
+            argsList.add(fecha);
+        }
+
+        String[] args = argsList.toArray(new String[0]);
+        Cursor cursor = db.rawQuery(query.toString(), args);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Gasto gasto = new Gasto(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+                        cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_CANTIDAD)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORIA)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FECHA)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTA))
+                );
+                gastos.add(gasto);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return gastos;
+    }
 }
+

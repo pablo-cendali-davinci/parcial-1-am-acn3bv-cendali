@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         btnConfirmarTransaccion.setOnClickListener(v -> {
             if (validarCampos()) {
                 guardarTransaccion();
-                Toast.makeText(MainActivity.this, "La transacción se guardó correctamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "El gasto se guardó correctamente", Toast.LENGTH_SHORT).show();
             }
         });
     }

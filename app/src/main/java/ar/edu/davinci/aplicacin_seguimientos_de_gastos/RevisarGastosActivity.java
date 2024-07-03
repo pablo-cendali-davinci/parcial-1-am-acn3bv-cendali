@@ -99,7 +99,31 @@ public class RevisarGastosActivity extends AppCompatActivity {
     }
 
     private void filtrarGastos() {
-        // Implementar la lógica para filtrar los gastos
+        String categoria = spinnerCategoria.getSelectedItem().toString();
+        String fecha = editFecha.getText().toString();
+
+        List<Gasto> gastosFiltrados = db.getGastosFiltrados(categoria, fecha);
+        listaGastos.removeAllViews();
+        for (Gasto gasto : gastosFiltrados) {
+            View itemGasto = getLayoutInflater().inflate(R.layout.item_gasto, null);
+            TextView tvCantidad = itemGasto.findViewById(R.id.tv_cantidad);
+            TextView tvCategoria = itemGasto.findViewById(R.id.tv_categoria);
+            TextView tvFecha = itemGasto.findViewById(R.id.tv_fecha);
+            TextView tvNota = itemGasto.findViewById(R.id.tv_nota);
+            Button btnEliminar = itemGasto.findViewById(R.id.btn_eliminar);
+
+            tvCantidad.setText(String.valueOf(gasto.getCantidad()));
+            tvCategoria.setText(gasto.getCategoria());
+            tvFecha.setText(gasto.getFecha());
+            tvNota.setText(gasto.getNota());
+
+            btnEliminar.setOnClickListener(v -> {
+                db.deleteGasto(gasto.getId());
+                mostrarGastos();
+            });
+
+            listaGastos.addView(itemGasto);
+        }
     }
 
     private void limpiarFiltros() {

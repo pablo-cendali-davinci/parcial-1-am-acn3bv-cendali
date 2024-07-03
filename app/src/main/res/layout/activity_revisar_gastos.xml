@@ -9,11 +9,11 @@
 
     <ImageButton
         android:id="@+id/btn_regreso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/descripcion_btn_regreso"
         android:backgroundTint="@color/ButtonColorRegreso"
-        app:srcCompat="@android:drawable/ic_menu_revert"
-        android:contentDescription="@string/descripcion_btn_regreso"/>
+        app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -73,9 +73,9 @@
         android:id="@+id/btn_filtrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Filtrar"
         android:backgroundTint="@color/ButtonColor"
         android:textColor="@android:color/black"
-        android:text="Filtrar"
         android:layout_gravity="end"
         android:layout_marginTop="8dp" />
 
@@ -83,9 +83,9 @@
         android:id="@+id/btn_limpiar_filtros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Limpiar Filtros"
         android:backgroundTint="@color/ButtonColor"
         android:textColor="@android:color/black"
-        android:text="Limpiar Filtros"
         android:layout_gravity="end"
         android:layout_marginTop="8dp" />
 
@@ -103,3 +103,4 @@
     </ScrollView>
 
 </LinearLayout>
+
