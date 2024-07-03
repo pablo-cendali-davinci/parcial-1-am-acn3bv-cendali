@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -24,6 +25,7 @@
         android:layout_width="271dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:textSize="20sp"
         android:hint="Usuario"
         android:inputType="text" />
 
@@ -33,6 +35,7 @@
         android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
+        android:textSize="20sp"
         android:hint="Contraseña"
         android:inputType="textPassword" />
 
