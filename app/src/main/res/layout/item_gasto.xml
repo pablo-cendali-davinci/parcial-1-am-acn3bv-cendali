@@ -37,6 +37,6 @@
         android:layout_height="wrap_content"
         android:text="Eliminar"
         android:textColor="#ffffff"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/ButtonColorRegreso"
         android:layout_gravity="end" />
 </LinearLayout>

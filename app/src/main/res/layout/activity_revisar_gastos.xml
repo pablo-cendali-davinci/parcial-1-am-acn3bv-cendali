@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/fondo_gastos">
 
     <ImageButton
         android:id="@+id/btn_regreso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/ButtonColorRegreso"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        app:srcCompat="@android:drawable/ic_menu_revert"
+        android:contentDescription="@string/descripcion_btn_regreso"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,7 +41,7 @@
         <Spinner
             android:id="@+id/spinner_categoria"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="2"
             android:entries="@array/categorias" />
     </LinearLayout>
@@ -60,7 +62,7 @@
         <EditText
             android:id="@+id/edit_fecha"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="2"
             android:focusable="false"
             android:clickable="true"
@@ -71,6 +73,8 @@
         android:id="@+id/btn_filtrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/ButtonColor"
+        android:textColor="@android:color/black"
         android:text="Filtrar"
         android:layout_gravity="end"
         android:layout_marginTop="8dp" />
@@ -79,6 +83,8 @@
         android:id="@+id/btn_limpiar_filtros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/ButtonColor"
+        android:textColor="@android:color/black"
         android:text="Limpiar Filtros"
         android:layout_gravity="end"
         android:layout_marginTop="8dp" />

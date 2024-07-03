@@ -8,4 +8,5 @@
             <item>Salud</item>
             <item>Otros</item>
         </string-array>
+    <string name="descripcion_btn_regreso">Regresar</string>
 </resources>
