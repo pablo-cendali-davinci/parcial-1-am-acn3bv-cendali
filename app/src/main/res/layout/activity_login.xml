@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:background="@color/white">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- Campo de Usuario -->
+    <EditText
+        android:id="@+id/etUsuario"
+        android:layout_width="271dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Usuario"
+        android:inputType="text" />
+
+    <!-- Campo de Contraseña -->
+    <EditText
+        android:id="@+id/etContrasena"
+        android:layout_width="268dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:hint="Contraseña"
+        android:inputType="textPassword" />
+
+    <!-- Botón de Login -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/ButtonColor"
+        android:text="Ingresar"
+        android:textColor="@android:color/black" />
+
+</LinearLayout>
