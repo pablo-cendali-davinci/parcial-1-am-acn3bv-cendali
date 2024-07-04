@@ -12,6 +12,8 @@ public class MenuActivity extends AppCompatActivity {
     private Button btnAddTransactionMenu;
     private Button btnReviewExpensesMenu;
 
+    private Button btnReturnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,8 @@ public class MenuActivity extends AppCompatActivity {
 
         btnAddTransactionMenu = findViewById(R.id.btnAddTransactionMenu);
         btnReviewExpensesMenu = findViewById(R.id.btnRevisarGastosMenu);
+        btnReturnLogin = findViewById(R.id.btnReturnLogin);
+
 
         btnAddTransactionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +36,13 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, RevisarGastosActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnReturnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

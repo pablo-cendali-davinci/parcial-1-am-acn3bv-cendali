@@ -9,7 +9,6 @@
     android:background="@drawable/fondo_menu">
 
     <!-- Título del menú -->
-
     <TextView
         android:id="@+id/tvTitleMenu"
         android:layout_width="wrap_content"
@@ -20,7 +19,6 @@
         android:textStyle="bold" />
 
     <!-- Botón de Añadir Gastos/Transacción -->
-
     <Button
         android:id="@+id/btnAddTransactionMenu"
         android:layout_width="260dp"
@@ -36,15 +34,21 @@
         android:id="@+id/btnRevisarGastosMenu"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="34dp"
         android:backgroundTint="@color/ButtonColor"
         android:textColor="@android:color/black"
         android:text="Revisar Gastos"
         android:padding="16dp"/>
 
-    <!-- Espacio para ajustar el contenido contenido -->
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="34dp" />
-
+    <!-- Botón de Volver al login -->
+    <Button
+        android:id="@+id/btnReturnLogin"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="34dp"
+        android:backgroundTint="@color/ButtonColor"
+        android:padding="16dp"
+        android:text="Volver al login"
+        android:textColor="@android:color/black" />
 
 </LinearLayout>
