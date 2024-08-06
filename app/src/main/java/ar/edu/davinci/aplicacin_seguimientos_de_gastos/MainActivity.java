@@ -19,6 +19,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btnRegreso;
     private EditText cant1, fecha1, nota;
     private TextView tituloTrans, seleccionCat, fechaTrans, notaLabel, ingresarCantidad;
-    private BaseDeDatos db;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        db = new BaseDeDatos(this);
+        db = FirebaseFirestore.getInstance();
 
         cant1 = findViewById(R.id.cant_1);
         fecha1 = findViewById(R.id.fecha_1);
@@ -67,33 +71,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnConfirmarTransaccion = findViewById(R.id.btn_confirmarTransaccion);
+        btnConfirmarTransaccion.setOnClickListener(view -> agregarGasto());
+
         fecha1.setOnClickListener(v -> mostrarDatePickerDialog());
 
-        ImageButton btnRegreso = findViewById(R.id.btn_regreso);
+        btnRegreso = findViewById(R.id.btn_regreso);
         btnRegreso.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             startActivity(intent);
         });
-
-        btnConfirmarTransaccion = findViewById(R.id.btn_confirmarTransaccion);
-        btnConfirmarTransaccion.setOnClickListener(v -> {
-            if (validarCampos()) {
-                guardarTransaccion();
-                Toast.makeText(MainActivity.this, "El gasto se guardó correctamente", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void mostrarDatePickerDialog() {
-        final Calendar calendiario = Calendar.getInstance();
-        int anio = calendiario.get(Calendar.YEAR);
-        int mes = calendiario.get(Calendar.MONTH);
-        int dia = calendiario.get(Calendar.DAY_OF_MONTH);
+        final Calendar calendario = Calendar.getInstance();
+        int anio = calendario.get(Calendar.YEAR);
+        int mes = calendario.get(Calendar.MONTH);
+        int dia = calendario.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, year, monthOfYear, dayOfMonth) -> {
-                    // Actualizar el EditText con la fecha seleccionada
                     String fechaSeleccionada = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                     fecha1.setText(fechaSeleccionada);
                 },
@@ -101,41 +99,41 @@ public class MainActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private boolean validarCampos() {
+    private void agregarGasto() {
         String cantidadStr = cant1.getText().toString();
-        String fechaStr = fecha1.getText().toString();
-
-        if (cantidadStr.isEmpty()) {
-            cant1.setError("La cantidad es requerida");
-            return false;
-        }
-
-        try {
-            double cantidad = Double.parseDouble(cantidadStr);
-            if (cantidad <= 0) {
-                cant1.setError("La cantidad debe ser mayor que 0");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            cant1.setError("Ingrese un número válido");
-            return false;
-        }
-
-        if (fechaStr.isEmpty()) {
-            fecha1.setError("La fecha es requerida");
-            return false;
-        }
-
-        return true;
-    }
-
-    private void guardarTransaccion() {
-        double cantidad = Double.parseDouble(cant1.getText().toString());
         String categoria = spinnerCategorias.getSelectedItem().toString();
         String fecha = fecha1.getText().toString();
         String notaText = nota.getText().toString();
 
-        Gasto gasto = new Gasto(0, cantidad, categoria, fecha, notaText);
-        db.addGasto(gasto);
+        if (cantidadStr.isEmpty() || fecha.isEmpty() || categoria.equals("Seleccionar categoría")) {
+            Toast.makeText(this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double cantidad = Double.parseDouble(cantidadStr);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        String userId = user != null ? user.getUid() : null;
+
+        if (userId == null) {
+            Toast.makeText(this, "Error al obtener el ID del usuario.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Gasto gasto = new Gasto(null, cantidad, categoria, fecha, notaText, userId);
+
+        db.collection("gastos").add(gasto).addOnSuccessListener(documentReference -> {
+            Toast.makeText(this, "Gasto agregado exitosamente.", Toast.LENGTH_SHORT).show();
+            limpiarCampos();
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Error al agregar el gasto.", Toast.LENGTH_SHORT).show();
+        });
+    }
+    private void limpiarCampos() {
+        cant1.setText("");
+        fecha1.setText("");
+        nota.setText("");
+        spinnerCategorias.setSelection(0);
     }
 }
