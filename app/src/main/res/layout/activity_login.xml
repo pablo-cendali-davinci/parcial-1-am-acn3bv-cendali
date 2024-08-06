@@ -21,12 +21,12 @@
 
     <!-- Campo de Usuario -->
     <EditText
-        android:id="@+id/etCorreo"
+        android:id="@+id/etUsuario"
         android:layout_width="271dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:textSize="20sp"
-        android:hint="Email"
+        android:hint="Usuario"
         android:inputType="text" />
 
     <!-- Campo de Contraseña -->
@@ -47,16 +47,5 @@
         android:backgroundTint="@color/ButtonColor"
         android:text="Ingresar"
         android:textColor="@android:color/black" />
-
-    <TextView
-        android:id="@+id/btn_GoRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registrate aquí"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="15sp"
-        android:padding="16dp"
-        android:clickable="true"
-        android:focusable="true" />
 
 </LinearLayout>

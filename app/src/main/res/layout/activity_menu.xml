@@ -48,7 +48,7 @@
         android:layout_marginBottom="34dp"
         android:backgroundTint="@color/ButtonColor"
         android:padding="16dp"
-        android:text="Cerrar Sesion"
+        android:text="Volver al login"
         android:textColor="@android:color/black" />
 
 </LinearLayout>

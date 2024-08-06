@@ -6,9 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 public class MenuActivity extends AppCompatActivity {
 
     private Button btnLoginMenu;
@@ -17,9 +14,6 @@ public class MenuActivity extends AppCompatActivity {
 
     private Button btnReturnLogin;
 
-    private FirebaseAuth mAuth;
-
-    private FirebaseFirestore mFirestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +23,6 @@ public class MenuActivity extends AppCompatActivity {
         btnReviewExpensesMenu = findViewById(R.id.btnRevisarGastosMenu);
         btnReturnLogin = findViewById(R.id.btnReturnLogin);
 
-        mAuth = FirebaseAuth.getInstance();
-        mFirestore = FirebaseFirestore.getInstance();
 
         btnAddTransactionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,10 +41,9 @@ public class MenuActivity extends AppCompatActivity {
         });
         btnReturnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                mAuth.signOut();
-                finish();
-                startActivity(new Intent(MenuActivity.this, LoginActivity.class));
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
