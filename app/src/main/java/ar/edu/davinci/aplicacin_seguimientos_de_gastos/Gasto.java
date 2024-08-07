@@ -12,7 +12,7 @@ public class Gasto implements Serializable {
 
     private String userId;
 
-    public Gasto() {
+    public Gasto() { //// Constructor vacío necesario para Firestore
     }
 
     public Gasto(String id, double cantidad, String categoria, String fecha, String nota, String userId) {

@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Calendar;
@@ -38,26 +39,30 @@ public class RevisarGastosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revisar_gastos);
 
-        db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance(); // Inicializar Firestore
 
+        // Inicializar las vistas
         spinnerCategoria = findViewById(R.id.spinner_categoria);
         editFecha = findViewById(R.id.edit_fecha);
         btnFiltrar = findViewById(R.id.btn_filtrar);
         btnLimpiarFiltros = findViewById(R.id.btn_limpiar_filtros);
         listaGastos = findViewById(R.id.lista_gastos);
 
+        // botón de regreso
         ImageButton btnRegreso = findViewById(R.id.btn_regreso);
         btnRegreso.setOnClickListener(v -> {
             Intent intent = new Intent(RevisarGastosActivity.this, MenuActivity.class);
             startActivity(intent);
         });
-
+        // Configurar el spinner de categorías
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categorias, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(adapter);
 
+        // Configurar el campo de fecha para mostrar el DatePicker
         editFecha.setOnClickListener(v -> mostrarDatePickerDialog());
 
+        // Configurar los botones de filtrar y limpiar filtros
         btnFiltrar.setOnClickListener(v -> filtrarGastos());
         btnLimpiarFiltros.setOnClickListener(v -> limpiarFiltros());
 
@@ -147,47 +152,53 @@ public class RevisarGastosActivity extends AppCompatActivity {
         String categoria = spinnerCategoria.getSelectedItem().toString();
         String fecha = editFecha.getText().toString();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user != null ? user.getUid(): null;
+        String userId = user != null ? user.getUid() : null;
 
         if (userId == null) {
             Toast.makeText(this, "Error al obtener el ID del usuario.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        db.collection("gastos")
-                .whereEqualTo("userId", userId)
-                .whereEqualTo("categoria", categoria)
-                .whereEqualTo("fecha", fecha)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        listaGastos.removeAllViews();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Gasto gasto = document.toObject(Gasto.class);
-                            View itemGasto = getLayoutInflater().inflate(R.layout.item_gasto, null);
-                            TextView tvCantidad = itemGasto.findViewById(R.id.tv_cantidad);
-                            TextView tvCategoria = itemGasto.findViewById(R.id.tv_categoria);
-                            TextView tvFecha = itemGasto.findViewById(R.id.tv_fecha);
-                            TextView tvNota = itemGasto.findViewById(R.id.tv_nota);
-                            Button btnEliminar = itemGasto.findViewById(R.id.btn_eliminar);
+        // Referencia a la colección de gastos
+        Query query = db.collection("gastos").whereEqualTo("userId", userId);
 
-                            tvCantidad.setText(String.valueOf(gasto.getCantidad()));
-                            tvCategoria.setText(gasto.getCategoria());
-                            tvFecha.setText(gasto.getFecha());
-                            tvNota.setText(gasto.getNota());
+        // Añadir filtros según los criterios proporcionados
+        if (!categoria.isEmpty()) {
+            query = query.whereEqualTo("categoria", categoria);
+        }
+        if (!fecha.isEmpty()) {
+            query = query.whereEqualTo("fecha", fecha);
+        }
 
-                            btnEliminar.setOnClickListener(v -> {
-                                db.collection("gastos").document(document.getId()).delete()
-                                        .addOnSuccessListener(aVoid -> mostrarGastos())
-                                        .addOnFailureListener(e -> Toast.makeText(RevisarGastosActivity.this, "Error al eliminar el gasto.", Toast.LENGTH_SHORT).show());
-                            });
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                listaGastos.removeAllViews();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Gasto gasto = document.toObject(Gasto.class);
+                    View itemGasto = getLayoutInflater().inflate(R.layout.item_gasto, null);
+                    TextView tvCantidad = itemGasto.findViewById(R.id.tv_cantidad);
+                    TextView tvCategoria = itemGasto.findViewById(R.id.tv_categoria);
+                    TextView tvFecha = itemGasto.findViewById(R.id.tv_fecha);
+                    TextView tvNota = itemGasto.findViewById(R.id.tv_nota);
+                    Button btnEliminar = itemGasto.findViewById(R.id.btn_eliminar);
 
-                            listaGastos.addView(itemGasto);
-                        }
-                    } else {
-                        Toast.makeText(RevisarGastosActivity.this, "Error al cargar los gastos.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    tvCantidad.setText(String.valueOf(gasto.getCantidad()));
+                    tvCategoria.setText(gasto.getCategoria());
+                    tvFecha.setText(gasto.getFecha());
+                    tvNota.setText(gasto.getNota());
+
+                    btnEliminar.setOnClickListener(v -> {
+                        db.collection("gastos").document(document.getId()).delete()
+                                .addOnSuccessListener(aVoid -> mostrarGastos())
+                                .addOnFailureListener(e -> Toast.makeText(RevisarGastosActivity.this, "Error al eliminar el gasto.", Toast.LENGTH_SHORT).show());
+                    });
+
+                    listaGastos.addView(itemGasto);
+                }
+            } else {
+                Toast.makeText(RevisarGastosActivity.this, "Error al cargar los gastos.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void limpiarFiltros() {

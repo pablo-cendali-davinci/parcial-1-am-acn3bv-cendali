@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+public class AgregarGastosActivity extends AppCompatActivity {
     private Button btnConfirmarTransaccion;
     private Spinner spinnerCategorias;
     private ImageButton btnRegreso;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnRegreso = findViewById(R.id.btn_regreso);
         btnRegreso.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+            Intent intent = new Intent(AgregarGastosActivity.this, MenuActivity.class);
             startActivity(intent);
         });
     }
